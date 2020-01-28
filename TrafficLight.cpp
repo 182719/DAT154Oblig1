@@ -9,7 +9,7 @@ LightState { false, true, false }}, stateNumber(0)
 
 void TrafficLight::nextState()
 {
-	stateNumber++;
+	stateNumber = (stateNumber + 1) % 4;
 }
 
 LightState TrafficLight::getCurrentState()
