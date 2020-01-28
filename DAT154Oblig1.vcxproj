@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DAT154Oblig1.h" />
+    <ClInclude Include="DrawController.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="TrafficLight.h" />
     <ClInclude Include="Resource.h" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DAT154Oblig1.cpp" />
+    <ClCompile Include="DrawController.cpp" />
     <ClCompile Include="TrafficLight.cpp" />
   </ItemGroup>
   <ItemGroup>

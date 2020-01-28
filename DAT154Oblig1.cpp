@@ -1,11 +1,9 @@
 // DAT154Oblig1.cpp : Defines the entry point for the application.
-
-
+//
 
 #include "framework.h"
 #include "DAT154Oblig1.h"
-#include "TrafficLight.h"
-
+#include "DrawController.h"
 
 #define MAX_LOADSTRING 100
 
@@ -14,7 +12,6 @@ HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
-TrafficLight trafficLight;
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -30,8 +27,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: Place code here.
-
-
 
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -143,10 +138,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_EXIT:
                 DestroyWindow(hWnd);
                 break;
-            case WM_LBUTTONDOWN:
-                //TODO: Change traffic light state on button press.
-
-                break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
@@ -156,8 +147,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: Add any drawing code that uses hdc here...
 
+            // TODO: Add any drawing code that uses hdc here...
+            drawTrafficLight(hdc, 100, 100);
 
             EndPaint(hWnd, &ps);
         }
