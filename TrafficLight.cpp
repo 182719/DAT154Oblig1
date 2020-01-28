@@ -1,15 +1,18 @@
 #include "TrafficLight.h"
 
-TrafficLight::TrafficLight(LightState s) : lightState(s)
+TrafficLight::TrafficLight() : lightState{ LightState{ true, false, false },
+LightState { true, true, false },
+LightState { false, false, true },
+LightState { false, true, false }}, stateNumber(0)
 {
 }
 
-void TrafficLight::setLightState(LightState s)
+void TrafficLight::nextState()
 {
-	lightState = s;
+	stateNumber++;
 }
 
-LightState TrafficLight::getLightState()
+LightState TrafficLight::getCurrentState()
 {
-	return lightState;
+	return lightState[stateNumber];
 }

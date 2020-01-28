@@ -1,15 +1,18 @@
 #pragma once
 
-enum class LightState {
-    red=0,redYellow,yellow,green
-};
+typedef struct {
+    bool red;
+    bool yellow;
+    bool green;
+} LightState;
 
 class TrafficLight {
-    LightState lightState;
+    LightState lightState[4];
+    int stateNumber;
 public:
-    TrafficLight(LightState s = LightState::red);
+    TrafficLight();
 
-    void setLightState(LightState s);
+    void nextState();
 
-    LightState getLightState();
+    LightState getCurrentState();
 };
