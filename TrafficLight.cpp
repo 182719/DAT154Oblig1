@@ -1,19 +1,15 @@
-struct LightState {
-    bool red;
-    bool yellow;
-    bool green;
-};
+#include "TrafficLight.h"
 
-class TrafficLight {
-    LightState state;
-public:
-    TrafficLight(LightState s) {
-        state = s;
-    }
-    void setLightState(LightState s) {
-        state = s;
-    }
-    LightState getLightState() {
-        return state;
-    }
-};
+TrafficLight::TrafficLight(LightState s) : lightState(s)
+{
+}
+
+void TrafficLight::setLightState(LightState s)
+{
+	lightState = s;
+}
+
+LightState TrafficLight::getLightState()
+{
+	return lightState;
+}

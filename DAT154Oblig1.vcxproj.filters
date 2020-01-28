@@ -27,6 +27,9 @@
     <ClInclude Include="DAT154Oblig1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TrafficLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DAT154Oblig1.cpp">
