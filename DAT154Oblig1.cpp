@@ -1,5 +1,11 @@
 // DAT154Oblig1.cpp : Defines the entry point for the application.
-//
+
+struct trafficLight {
+    bool red = true;
+    bool yellow = false;
+    bool green = false;
+};
+
 
 #include "framework.h"
 #include "DAT154Oblig1.h"
@@ -137,6 +143,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_EXIT:
                 DestroyWindow(hWnd);
                 break;
+            case WM_LBUTTONDOWN:
+                //TODO: Change traffic light state on button press.
+
+                break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
@@ -147,6 +157,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: Add any drawing code that uses hdc here...
+
+
             EndPaint(hWnd, &ps);
         }
         break;

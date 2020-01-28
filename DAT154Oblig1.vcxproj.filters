@@ -32,6 +32,9 @@
     <ClCompile Include="DAT154Oblig1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TrafficLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DAT154Oblig1.rc">
