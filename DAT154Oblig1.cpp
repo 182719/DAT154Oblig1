@@ -165,8 +165,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             InvalidateRect(hWnd, 0, true);
         }
         fTimer = !fTimer;
-        Position p = { 100,100 };
-        Car c(p);
+        Position p = { 700,100 };
+        Car c(p,false, &trafficLight1);
         car.push_back(c);
         }
         break;
@@ -175,6 +175,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
         trafficLight1.nextState();
         trafficLight2.nextState();
+        for (size_t i = 0; i < car.size(); i++)
+        {
+            car.at(i).move();
+        }
         InvalidateRect(hWnd, NULL, true);
         }
         break;

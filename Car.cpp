@@ -9,8 +9,9 @@ Car::Car() {
 	int g = rand() % 255;
 	int b = rand() % 255;
 	color = { r,g,b };
+	horizontal = false;
 }
-Car::Car(Position p) : position(p) 
+Car::Car(Position p, bool h, TrafficLight* t) : position(p), horizontal(h), trafficLight(t)
 {
 	int r = rand() % 255;
 	int g = rand() % 255;
@@ -31,4 +32,11 @@ Position Car::getPosition()
 void Car::setPosition(Position p)
 {
 	position = p;
+}
+
+void Car::move()
+{
+	if (trafficLight->getCurrentState().green) {
+		position.y += 50;
+	}
 }

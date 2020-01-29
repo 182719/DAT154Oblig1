@@ -100,3 +100,19 @@ void drawCar(HDC hdc, Car car)
 	DeleteObject(carColor);
 	DeleteObject(hOrg);
 }
+
+void drawCarI(HDC hdc, Car car)
+{
+	Color cColor = car.getColor();
+	Position cPosition = car.getPosition();
+
+	HBRUSH carColor = CreateSolidBrush(RGB(cColor.red, cColor.green, cColor.blue));
+	HGDIOBJ hOrg = SelectObject(hdc, carColor);
+
+	Rectangle(hdc, cPosition.x, cPosition.y, cPosition.x + 50, cPosition.y + 25);
+
+
+	SelectObject(hdc, hOrg);
+	DeleteObject(carColor);
+	DeleteObject(hOrg);
+}
