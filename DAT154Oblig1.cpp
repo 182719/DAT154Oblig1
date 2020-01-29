@@ -14,6 +14,7 @@ WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 TrafficLight trafficLight1(0);
 TrafficLight trafficLight2(2);
+Car car[10];
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -162,6 +163,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             InvalidateRect(hWnd, 0, true);
         }
         fTimer = !fTimer;
+        Position p = { 100,100 };
+        car[0] = Car(p);
         }
         break;
 
@@ -181,6 +184,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             drawTrafficLight(hdc, 550, 600, trafficLight1);
             drawTrafficLight(hdc, 850, 150, trafficLight2);
             drawRoad(hdc);
+            drawCar(hdc, car[0]);
             EndPaint(hWnd, &ps);
         }
         break;

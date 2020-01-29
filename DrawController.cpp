@@ -89,13 +89,14 @@ void drawCar(HDC hdc, Car car)
 {
 	Color cColor = car.getColor();
 	Position cPosition = car.getPosition();
-	HBRUSH carColor = CreateSolidBrush(RGB(cColor.red, cColor.green, cColor.blue));
-	HBRUSH actualBrush = carColor;
-	HGDIOBJ hOrg = SelectObject(hdc, actualBrush);
 
-	Rectangle(hdc, x, y, x + 100, y + 270);
+	HBRUSH carColor = CreateSolidBrush(RGB(cColor.red, cColor.green, cColor.blue));
+	HGDIOBJ hOrg = SelectObject(hdc, carColor);
+
+	Rectangle(hdc, cPosition.x, cPosition.y, cPosition.x + 25, cPosition.y + 50);
 
 
 	SelectObject(hdc, hOrg);
-	DeleteObject(actualBrush);
+	DeleteObject(carColor);
+	DeleteObject(hOrg);
 }
