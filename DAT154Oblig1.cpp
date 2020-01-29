@@ -5,6 +5,7 @@
 #include "DrawController.h"
 #include "TrafficLight.h"
 #include "Car.h"
+#include <vector>
 
 #define MAX_LOADSTRING 100
 
@@ -14,7 +15,8 @@ WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 TrafficLight trafficLight1(0);
 TrafficLight trafficLight2(2);
-Car car[10];
+std::vector<Car> car;
+
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -164,7 +166,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         fTimer = !fTimer;
         Position p = { 100,100 };
-        car[0] = Car(p);
+        Car c(p);
+        car.push_back(c);
         }
         break;
 
@@ -184,7 +187,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             drawTrafficLight(hdc, 550, 600, trafficLight1);
             drawTrafficLight(hdc, 850, 150, trafficLight2);
             drawRoad(hdc);
-            drawCar(hdc, car[0]);
+            for (size_t i = 0; i < car.size(); i++)
+            {
+                drawCar(hdc, car.at(i));
+            }
             EndPaint(hWnd, &ps);
         }
         break;
