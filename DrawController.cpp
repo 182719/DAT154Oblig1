@@ -111,7 +111,6 @@ void drawCarI(HDC hdc, Car car)
 
 	Rectangle(hdc, cPosition.x, cPosition.y, cPosition.x + 50, cPosition.y + 25);
 
-
 	SelectObject(hdc, hOrg);
 	DeleteObject(carColor);
 	DeleteObject(hOrg);

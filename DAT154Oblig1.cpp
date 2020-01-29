@@ -156,29 +156,58 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         //InvalidateRect(hWnd, NULL, true);
         {
         static bool fTimer = false;
-        if (!fTimer){
-            SetTimer(hWnd, 0, 1000, NULL);
+        if (!fTimer)
+        {
+            SetTimer(hWnd, 0, 2000, NULL);
         }
         else {
             //Clean up
             KillTimer(hWnd, 0);
             InvalidateRect(hWnd, 0, true);
         }
+        if (!fTimer)
+        {
+            SetTimer(hWnd, 1, 100, NULL);
+        }
+        else 
+        {
+            //Clean up
+            KillTimer(hWnd, 1);
+            InvalidateRect(hWnd, 0, true);
+        }
         fTimer = !fTimer;
-        Position p = { 700,100 };
-        Car c(p,false, &trafficLight1);
-        car.push_back(c);
+        Position p = { 710,100 };
+
+        if (car.size() == 0) 
+        {
+            Car c(p, false, &trafficLight2, NULL);
+            car.push_back(c);
+        }
+        else 
+        {
+            Car c(p,false, &trafficLight2, &car.at(car.size()-1));
+            car.push_back(c);
+        }
+        
         }
         break;
 
     case WM_TIMER:
         {
-        trafficLight1.nextState();
-        trafficLight2.nextState();
-        for (size_t i = 0; i < car.size(); i++)
-        {
-            car.at(i).move();
+        switch (wParam) {
+        case 0:
+            trafficLight1.nextState();
+            trafficLight2.nextState();
+            break;
+        case 1:
+            for (size_t i = 0; i < car.size(); i++)
+            {
+                car.at(i).move();
+            }
+            break;
         }
+
+
         InvalidateRect(hWnd, NULL, true);
         }
         break;

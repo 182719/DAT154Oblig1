@@ -17,10 +17,11 @@ class Car {
 	Position position;
 	bool horizontal;
 	TrafficLight* trafficLight;
+	Car* carInFront;
 
 public:
 	Car();
-	Car(Position p, bool h, TrafficLight* t);
+	Car(Position p, bool h, TrafficLight* t, Car* carInFront);
 	Color getColor();
 	Position getPosition();
 	void setPosition(Position p);

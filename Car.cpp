@@ -11,7 +11,7 @@ Car::Car() {
 	color = { r,g,b };
 	horizontal = false;
 }
-Car::Car(Position p, bool h, TrafficLight* t) : position(p), horizontal(h), trafficLight(t)
+Car::Car(Position p, bool h, TrafficLight* t, Car* c = NULL) : position(p), horizontal(h), trafficLight(t), carInFront(c)
 {
 	int r = rand() % 255;
 	int g = rand() % 255;
@@ -36,7 +36,29 @@ void Car::setPosition(Position p)
 
 void Car::move()
 {
-	if (trafficLight->getCurrentState().green) {
-		position.y += 50;
+	if (carInFront == NULL) {
+		if (position.y < 400) {
+			position.y += 10;
+		}
+		else if (position.y >= 400 && trafficLight->getCurrentState().green)
+		{
+			position.y += 10;
+		}
+		else if (position.y > 500) {
+			position.y += 10;
+		}
 	}
+	else {
+		if (position.y < 400 && carInFront->getPosition().y > position.y) {
+			position.y += 10;
+		}
+		else if (position.y >= 400 && trafficLight->getCurrentState().green && carInFront->getPosition().y > position.y)
+		{
+			position.y += 10;
+		}
+		else if (position.y > 500 && carInFront->getPosition().y > position.y) {
+			position.y += 10;
+		}
+	}
+
 }
