@@ -157,6 +157,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             // TODO: Add any drawing code that uses hdc here...
             drawTrafficLight(hdc, 100, 100,trafficLight);
+            drawRoad(hdc);
             EndPaint(hWnd, &ps);
         }
         break;

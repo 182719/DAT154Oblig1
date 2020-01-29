@@ -5,3 +5,4 @@
 
 void drawTrafficLight(HDC hdc, int x, int y, TrafficLight trafficLight);
 
+void drawRoad(HDC hdc);
