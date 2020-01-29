@@ -189,7 +189,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             // TODO: Add any drawing code that uses hdc here...
             drawTrafficLight(hdc, 550, 600, trafficLight1);
-            drawTrafficLight(hdc, 850, 150, trafficLight2);
+            drawTrafficLight(hdc, 550, 150, trafficLight2);
             drawRoad(hdc);
             for (size_t i = 0; i < car.size(); i++)
             {
