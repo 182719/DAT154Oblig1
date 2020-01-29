@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "DAT154Oblig1.h"
 #include "TrafficLight.h"
+#include "Car.h"
 
 void drawTrafficLight(HDC hdc, int x, int y, TrafficLight trafficLight)
 {
@@ -82,4 +83,19 @@ void drawRoad(HDC hdc)
 	DeleteObject(greyBrush);
 	DeleteObject(yellowBrush);
 
+}
+
+void drawCar(HDC hdc, Car car) 
+{
+	Color cColor = car.getColor();
+	Position cPosition = car.getPosition();
+	HBRUSH carColor = CreateSolidBrush(RGB(cColor.red, cColor.green, cColor.blue));
+	HBRUSH actualBrush = carColor;
+	HGDIOBJ hOrg = SelectObject(hdc, actualBrush);
+
+	Rectangle(hdc, x, y, x + 100, y + 270);
+
+
+	SelectObject(hdc, hOrg);
+	DeleteObject(actualBrush);
 }

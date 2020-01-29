@@ -1,10 +1,10 @@
 // DAT154Oblig1.cpp : Defines the entry point for the application.
-//
 
 #include "framework.h"
 #include "DAT154Oblig1.h"
 #include "DrawController.h"
 #include "TrafficLight.h"
+#include "Car.h"
 
 #define MAX_LOADSTRING 100
 
@@ -178,7 +178,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
 
             // TODO: Add any drawing code that uses hdc here...
-            drawTrafficLight(hdc, 550, 600,trafficLight1);
+            drawTrafficLight(hdc, 550, 600, trafficLight1);
             drawTrafficLight(hdc, 850, 150, trafficLight2);
             drawRoad(hdc);
             EndPaint(hWnd, &ps);

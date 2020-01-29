@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Car.h" />
     <ClInclude Include="DAT154Oblig1.h" />
     <ClInclude Include="DrawController.h" />
     <ClInclude Include="framework.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Car.cpp" />
     <ClCompile Include="DAT154Oblig1.cpp" />
     <ClCompile Include="DrawController.cpp" />
     <ClCompile Include="TrafficLight.cpp" />
