@@ -148,9 +148,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_LBUTTONDOWN:
+        //trafficLight1.nextState();
+        //trafficLight2.nextState();
+        //InvalidateRect(hWnd, NULL, true);
+        {
+        static bool fTimer = false;
+        if (!fTimer){
+            SetTimer(hWnd, 0, 1000, NULL);
+        }
+        else {
+            //Clean up
+            KillTimer(hWnd, 0);
+            InvalidateRect(hWnd, 0, true);
+        }
+        fTimer = !fTimer;
+        }
+        break;
+
+    case WM_TIMER:
+        {
         trafficLight1.nextState();
         trafficLight2.nextState();
         InvalidateRect(hWnd, NULL, true);
+        }
         break;
     case WM_PAINT:
         {
