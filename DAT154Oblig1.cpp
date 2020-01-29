@@ -12,7 +12,8 @@
 HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
-TrafficLight trafficLight;
+TrafficLight trafficLight1(0);
+TrafficLight trafficLight2(2);
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -147,7 +148,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_LBUTTONDOWN:
-        trafficLight.nextState();
+        trafficLight1.nextState();
+        trafficLight2.nextState();
         InvalidateRect(hWnd, NULL, true);
         break;
     case WM_PAINT:
@@ -156,7 +158,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
 
             // TODO: Add any drawing code that uses hdc here...
-            drawTrafficLight(hdc, 100, 100,trafficLight);
+            drawTrafficLight(hdc, 550, 600,trafficLight1);
+            drawTrafficLight(hdc, 850, 150, trafficLight2);
             drawRoad(hdc);
             EndPaint(hWnd, &ps);
         }
