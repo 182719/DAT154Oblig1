@@ -15,7 +15,10 @@ WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 TrafficLight trafficLight1(0);
 TrafficLight trafficLight2(2);
-std::vector<Car> car;
+std::vector<Car*> car;
+static bool fTimer = false;                     //Timer boolean
+static bool cTimer = false;                     //Car timer
+
 
 
 // Forward declarations of functions included in this code module:
@@ -155,38 +158,42 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         //trafficLight2.nextState();
         //InvalidateRect(hWnd, NULL, true);
         {
-        static bool fTimer = false;
         if (!fTimer)
         {
             SetTimer(hWnd, 0, 2000, NULL);
+            fTimer = true;
+
         }
         else {
             //Clean up
-            KillTimer(hWnd, 0);
-            InvalidateRect(hWnd, 0, true);
+            //KillTimer(hWnd, 0);
+            //InvalidateRect(hWnd, 0, true);
         }
-        if (!fTimer)
+        if (!cTimer)
         {
             SetTimer(hWnd, 1, 100, NULL);
+            cTimer = true;
         }
         else 
         {
             //Clean up
-            KillTimer(hWnd, 1);
-            InvalidateRect(hWnd, 0, true);
+            //KillTimer(hWnd, 1);
+            //InvalidateRect(hWnd, 0, true);
         }
-        fTimer = !fTimer;
-        Position p = { 710,100 };
+        //fTimer = !fTimer;
+        Position p = {710, 100};
 
         if (car.size() == 0) 
         {
-            Car c(p, false, &trafficLight2, NULL);
+            Car* c = new Car(p, false, &trafficLight2, NULL); //HUSK Å SLETT
             car.push_back(c);
         }
         else 
         {
-            Car c(p,false, &trafficLight2, &car.at(car.size()-1));
+            Car* c = new Car(p,false, &trafficLight2, car.at(car.size()-1)); //HUSK Å SLETT
+            //c.setNextCar(&(car.at(0)));
             car.push_back(c);
+            int x = 0;
         }
         
         }
@@ -202,7 +209,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         case 1:
             for (size_t i = 0; i < car.size(); i++)
             {
-                car.at(i).move();
+                car.at(i)->move();
             }
             break;
         }
@@ -222,7 +229,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             drawRoad(hdc);
             for (size_t i = 0; i < car.size(); i++)
             {
-                drawCar(hdc, car.at(i));
+                drawCar(hdc, *(car.at(i)));
             }
             EndPaint(hWnd, &ps);
         }

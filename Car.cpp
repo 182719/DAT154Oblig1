@@ -11,13 +11,17 @@ Car::Car() {
 	color = { r,g,b };
 	horizontal = false;
 }
-Car::Car(Position p, bool h, TrafficLight* t, Car* c = NULL) : position(p), horizontal(h), trafficLight(t), carInFront(c)
+
+
+
+Car::Car(Position p, bool h, TrafficLight* t, Car* c) : position(p), horizontal(h), trafficLight(t), carInFront(c)
 {
 	int r = rand() % 255;
 	int g = rand() % 255;
 	int b = rand() % 255; 
 	color = {r,g,b};
 }
+
 
 Color Car::getColor()
 {
@@ -34,6 +38,7 @@ void Car::setPosition(Position p)
 	position = p;
 }
 
+//TODO: ingen kræsjing
 void Car::move()
 {
 	if (carInFront == NULL) {
