@@ -191,9 +191,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         else 
         {
             Car* c = new Car(p,false, &trafficLight2, car.at(car.size()-1)); //HUSK Å SLETT
-            //c.setNextCar(&(car.at(0)));
             car.push_back(c);
-            int x = 0;
         }
         
         }

@@ -54,14 +54,14 @@ void Car::move()
 		}
 	}
 	else {
-		if (position.y < 400 && carInFront->getPosition().y > position.y) {
+		if (position.y < 400 && (carInFront->getPosition().y) - 60 > position.y) { //trekker fra 60 pga lengden på bilen
 			position.y += 10;
 		}
 		else if (position.y >= 400 && trafficLight->getCurrentState().green && carInFront->getPosition().y > position.y)
 		{
 			position.y += 10;
 		}
-		else if (position.y > 500 && carInFront->getPosition().y > position.y) {
+		else if (position.y > 450 && (carInFront->getPosition().y) - 60 > position.y) {
 			position.y += 10;
 		}
 	}
