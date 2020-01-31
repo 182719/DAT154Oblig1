@@ -43,52 +43,52 @@ void Car::move()
 {
 	if (!horizontal) {
 		if (carInFront == NULL) {
-			if (position.y < 400) {
+			if (position.y < 350) {
 				position.y += 10;
 			}
-			else if (position.y >= 400 && trafficLight->getCurrentState().green)
+			else if (position.y >= 350 && trafficLight->getCurrentState().green)
 			{
 				position.y += 10;
 			}
-			else if (position.y > 500) {
+			else if (position.y > 351) {
 				position.y += 10;
 			}
 		}
 		else {
-			if (position.y < 400 && (carInFront->getPosition().y) - 60 > position.y) { //trekker fra 60 pga lengden på bilen
+			if (position.y < 350 && (carInFront->getPosition().y) - 60 > position.y) { //trekker fra 60 pga lengden på bilen
 				position.y += 10;
 			}
-			else if (position.y >= 400 && trafficLight->getCurrentState().green && carInFront->getPosition().y > position.y)
+			else if (position.y >= 350 && trafficLight->getCurrentState().green && carInFront->getPosition().y > position.y)
 			{
 				position.y += 10;
 			}
-			else if (position.y > 450 && (carInFront->getPosition().y) - 60 > position.y) {
+			else if (position.y > 351 && (carInFront->getPosition().y) - 60 > position.y) {
 				position.y += 10;
 			}
 		}
 	}
 	else {
 		if (carInFront == NULL) {
-			if (position.x < 400) {
+			if (position.x < 350) {
 				position.x += 10;
 			}
-			else if (position.x >= 400 && trafficLight->getCurrentState().green)
+			else if (position.x >= 350 && trafficLight->getCurrentState().green)
 			{
 				position.x += 10;
 			}
-			else if (position.x > 500) {
+			else if (position.x > 351) {
 				position.x += 10;
 			}
 		}
 		else {
-			if (position.x < 400 && (carInFront->getPosition().x) - 60 > position.x) { //trekker fra 60 pga lengden på bilen
+			if (position.x < 350 && (carInFront->getPosition().x) - 60 > position.x) { //trekker fra 60 pga lengden på bilen
 				position.x += 10;
 			}
-			else if (position.x >= 400 && trafficLight->getCurrentState().green && carInFront->getPosition().x > position.x)
+			else if (position.x >= 350 && trafficLight->getCurrentState().green && carInFront->getPosition().x > position.x)
 			{
 				position.x += 10;
 			}
-			else if (position.x > 450 && (carInFront->getPosition().x) - 60 > position.x) {
+			else if (position.x > 351 && (carInFront->getPosition().x) - 60 > position.x) {
 				position.x += 10;
 			}
 		}

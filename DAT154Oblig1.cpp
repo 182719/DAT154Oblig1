@@ -178,15 +178,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             //KillTimer(hWnd, 1);
             //InvalidateRect(hWnd, 0, true);
         }
-        Position p = { 310 , 450 };
+        Position p = { 0 , 460 };
         if (horizontalCarList.size() == 0)
         {
-            Car* c = new Car(p, true, &trafficLight2, NULL); //HUSK Å SLETT
+            Car* c = new Car(p, true, &trafficLight1, NULL); //HUSK Å SLETT
             horizontalCarList.push_back(c);
         }
         else
         {
-            Car* c = new Car(p, true, &trafficLight2, horizontalCarList.at(horizontalCarList.size() - 1)); //HUSK Å SLETT
+            Car* c = new Car(p, true, &trafficLight1, horizontalCarList.at(horizontalCarList.size() - 1)); //HUSK Å SLETT
             horizontalCarList.push_back(c);
         }
         break;
@@ -220,7 +220,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             //InvalidateRect(hWnd, 0, true);
         }
         //fTimer = !fTimer;
-        Position p = {710, 100};
+        Position p = {410, 0};
 
         if (verticalCarList.size() == 0) 
         {
@@ -265,8 +265,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
 
             // TODO: Add any drawing code that uses hdc here...
-            drawTrafficLight(hdc, 550, 600, trafficLight1);
-            drawTrafficLight(hdc, 550, 150, trafficLight2);
+            drawTrafficLight(hdc, 250, 500, trafficLight1);
+            drawTrafficLight(hdc, 300, 100, trafficLight2); 
             drawRoad(hdc);
             for (size_t i = 0; i < verticalCarList.size(); i++)
             {
@@ -274,7 +274,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
             for (size_t i = 0; i < horizontalCarList.size(); i++)
             {
-                drawCar(hdc, *(horizontalCarList.at(i)));
+                drawCarI(hdc, *(horizontalCarList.at(i)));
             }
             EndPaint(hWnd, &ps);
         }

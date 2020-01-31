@@ -55,24 +55,24 @@ void drawRoad(HDC hdc)
 	//Saving original brush to be put back later
 	HGDIOBJ hOrg = SelectObject(hdc, actualBrush);
 
-	Rectangle(hdc, 700, 50, 800, 950);
-	Rectangle(hdc, 300, 450, 1200, 550);
+	Rectangle(hdc, 400, 0, 500, 900); // Vertical Road
+	Rectangle(hdc, 0, 400, 900, 500); // Horizontal Road
 	actualBrush = darkGreyBrush;
 	SelectObject(hdc, actualBrush);
-	Rectangle(hdc, 700, 450, 800, 550);
+	Rectangle(hdc, 400, 400,500, 500); // Center Square
 
 	actualBrush = yellowBrush;
 	SelectObject(hdc, actualBrush);
 
-	for (int y = 60; y < 950; y += 50) {
-		if (!(y > 450 && y < 550)) {
-			Rectangle(hdc, 747, y, 752, y + 25);
+	for (int y = 0; y < 900; y += 50) {  //Vertical middle stripes 
+		if (!(y > 399 && y < 499)) {
+			Rectangle(hdc, 447, y, 452, y + 25);
 		}
 	}
 
-	for (int x = 310; x < 1200; x += 50) {
-		if (!(x > 700 && x < 800)) {
-			Rectangle(hdc, x, 497, x + 25, 502);
+	for (int x = 0; x < 900; x += 50) { // Horizontal middle stripes
+		if (!(x > 399 && x < 499)) {
+			Rectangle(hdc, x, 447, x + 25, 452);
 		}
 	}
 
