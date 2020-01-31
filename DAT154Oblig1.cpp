@@ -178,7 +178,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             //KillTimer(hWnd, 1);
             //InvalidateRect(hWnd, 0, true);
         }
-        Position p = { 0 , 460 };
+        Position p = { -50 , 460 };
         if (horizontalCarList.size() == 0)
         {
             Car* c = new Car(p, true, &trafficLight1, NULL); //HUSK Å SLETT
@@ -220,7 +220,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             //InvalidateRect(hWnd, 0, true);
         }
         //fTimer = !fTimer;
-        Position p = {410, 0};
+        Position p = {410, -50};
 
         if (verticalCarList.size() == 0) 
         {
