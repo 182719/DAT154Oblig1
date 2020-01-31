@@ -6,6 +6,8 @@
 #include "TrafficLight.h"
 #include "Car.h"
 #include <vector>
+#include <list>
+#include "SirkList.h"
 
 #define MAX_LOADSTRING 100
 
@@ -15,10 +17,11 @@ WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 TrafficLight trafficLight1(0);
 TrafficLight trafficLight2(2);
-std::vector<Car*> verticalCarList;
-std::vector<Car*> horizontalCarList;
+list<Car*> verticalCarList;
+list<Car*> horizontalCarList;
 static bool fTimer = false;                     //Timer boolean
 static bool cTimer = false;                     //Car timer
+list<Car*> liste1;
 
 
 
@@ -137,6 +140,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+    case WM_KEYDOWN:
+    {
+        Position p = { 410, -50 };
+
+        Car* c1 = new Car(p, true, &trafficLight1, NULL);
+        Car* c2 = new Car(p, true, &trafficLight1, NULL);
+        Car* c3 = new Car(p, true, &trafficLight1, NULL);
+        Car* c4 = new Car(p, true, &trafficLight1, NULL);
+        Car* c5 = new Car(p, true, &trafficLight1, NULL);
+        Car* c6 = new Car(p, true, &trafficLight1, NULL);
+
+
+        break;
+    }
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -186,7 +203,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         else
         {
-            Car* c = new Car(p, true, &trafficLight1, horizontalCarList.at(horizontalCarList.size() - 1)); //HUSK Å SLETT
+            Car* c = new Car(p, true, &trafficLight1, horizontalCarList.back()); //HUSK Å SLETT
             horizontalCarList.push_back(c);
         }
         break;
@@ -229,7 +246,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         else 
         {
-            Car* c = new Car(p,false, &trafficLight2, verticalCarList.at(verticalCarList.size()-1)); //HUSK Å SLETT
+            Car* c = new Car(p,false, &trafficLight2, verticalCarList.back()); //HUSK Å SLETT
             verticalCarList.push_back(c);
         }
         
@@ -244,13 +261,37 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             trafficLight2.nextState();
             break;
         case 1:
-            for (size_t i = 0; i < verticalCarList.size(); i++)
-            {
-                verticalCarList.at(i)->move();
+            for (auto v : verticalCarList) {
+                v->move();
             }
-            for (size_t i = 0; i < horizontalCarList.size(); i++)
-            {
-                horizontalCarList.at(i)->move();
+            for (auto c : horizontalCarList) {
+                c->move();
+            }
+            if (!verticalCarList.empty()) {
+                Car* c = verticalCarList.front();
+                if (c->getPosition().y >= 900) {
+                    delete c;
+                    verticalCarList.pop_front();
+                    if (!verticalCarList.empty()) {
+                        Car* d = verticalCarList.front();
+                        d->setCarInFront(NULL);
+                        int x = 1;
+                    }
+                }
+            }
+            if (!horizontalCarList.empty()) {
+                Car* c = horizontalCarList.front();
+                if (c->getPosition().x >= 900) {
+                    delete c;
+                    horizontalCarList.pop_front();
+                    if (!horizontalCarList.empty()) {
+                        Car* d = horizontalCarList.front();
+                        d->setCarInFront(NULL);
+                        int x = 1;
+                    }
+
+
+                }
             }
             break;
         }
@@ -268,6 +309,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             drawTrafficLight(hdc, 250, 500, trafficLight1);
             drawTrafficLight(hdc, 300, 100, trafficLight2); 
             drawRoad(hdc);
+            for (auto v : verticalCarList) {
+                drawCar(hdc, *v);
+            }
+            for (auto c : horizontalCarList) {
+                drawCarI(hdc, *c);
+            }
+            /*
             for (size_t i = 0; i < verticalCarList.size(); i++)
             {
                 drawCar(hdc, *(verticalCarList.at(i)));
@@ -276,6 +324,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 drawCarI(hdc, *(horizontalCarList.at(i)));
             }
+            */
             EndPaint(hWnd, &ps);
         }
         break;

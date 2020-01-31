@@ -38,6 +38,11 @@ void Car::setPosition(Position p)
 	position = p;
 }
 
+void Car::setCarInFront(Car* c)
+{
+	carInFront = c;
+}
+
 //TODO: ingen kræsjing
 void Car::move()
 {

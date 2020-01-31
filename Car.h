@@ -26,5 +26,6 @@ public:
 	Position getPosition();
 	void setPosition(Position p);
 	void move();
+	void setCarInFront(Car*);
 };
 
