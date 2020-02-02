@@ -423,7 +423,7 @@ INT_PTR CALLBACK ProbabilityDialog(HWND hDlg, UINT message, WPARAM wParam, LPARA
         if (LOWORD(wParam) == SB_THUMBTRACK || LOWORD(wParam) == SB_THUMBPOSITION) {
 
             probabilitySettingN = HIWORD(wParam) / 100.;
-            probabilitySettingW = probabilitySettingW;
+            probabilitySettingW = probabilitySettingN;
         }
         break;
     }
