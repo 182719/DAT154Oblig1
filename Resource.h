@@ -14,7 +14,6 @@
 #define IDR_MAINFRAME                   128
 #define IDD_DIALOGPROB                  130
 #define IDC_SLIDER1                     1000
-#define IDC_SLIDER2                     1001
 #define ID_SHOWPROB                     32772
 #define IDC_STATIC                      -1
 

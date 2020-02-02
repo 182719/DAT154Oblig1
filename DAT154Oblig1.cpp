@@ -8,6 +8,7 @@
 #include <vector>
 #include <list>
 #include "SirkList.h"
+#include "Commctrl.h"
 
 #define MAX_LOADSTRING 100
 
@@ -19,10 +20,13 @@ TrafficLight trafficLight1(0);
 TrafficLight trafficLight2(2);
 list<Car*> verticalCarList;
 list<Car*> horizontalCarList;
-static bool fTimer = false;                     //Timer boolean
-static bool cTimer = false;                     //Car timer
+static bool trafficLIghtTimerStarted = false;                     //Timer boolean
+static bool carTimerStarted = false;                     //Car timer
 list<Car*> liste1;
-
+double pn = 0;
+double pw = 0;
+double probabilitySettingN = 0;
+double probabilitySettingW = 0;
 
 
 // Forward declarations of functions included in this code module:
@@ -142,19 +146,45 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     switch (message)
     {
     case WM_KEYDOWN:
-    {
-        Position p = { 410, -50 };
+        switch (wParam) {
+        case VK_LEFT:
+            if (probabilitySettingW > 0) {
+                probabilitySettingW -= 0.1;
+            }
+      
+            break;
+        case VK_RIGHT:
+            if (probabilitySettingW < 1.0) {
+                probabilitySettingW += 0.1;
+            }
+            break;
+        case VK_UP:
+            if (probabilitySettingN < 1.0) {
+                probabilitySettingN += 0.1;
+            }
+            break;
+        case VK_DOWN:
+            if (probabilitySettingN > 0) {
+                probabilitySettingN -= 0.1;
+            }
+            break;
+        
+        default: 
+           {
+                Position p = { 410, -50 };
 
-        Car* c1 = new Car(p, true, &trafficLight1, NULL);
-        Car* c2 = new Car(p, true, &trafficLight1, NULL);
-        Car* c3 = new Car(p, true, &trafficLight1, NULL);
-        Car* c4 = new Car(p, true, &trafficLight1, NULL);
-        Car* c5 = new Car(p, true, &trafficLight1, NULL);
-        Car* c6 = new Car(p, true, &trafficLight1, NULL);
+                Car* c1 = new Car(p, true, &trafficLight1, NULL);
+                Car* c2 = new Car(p, true, &trafficLight1, NULL);
+                Car* c3 = new Car(p, true, &trafficLight1, NULL);
+                Car* c4 = new Car(p, true, &trafficLight1, NULL);
+                Car* c5 = new Car(p, true, &trafficLight1, NULL);
+                Car* c6 = new Car(p, true, &trafficLight1, NULL);
 
 
-        break;
-    }
+                break;
+            }
+        }
+ 
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -220,7 +250,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         if (!carTimerStarted)
         {
-            SetTimer(hWnd, 1, 1000, NULL);
+            SetTimer(hWnd, 1, 33, NULL);
             carTimerStarted = true;
         }
         else 
@@ -239,6 +269,39 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         case 0:
             trafficLight1.nextState();
             trafficLight2.nextState();
+
+
+            pn = rand() / (double)RAND_MAX;
+            pw = rand() / (double)RAND_MAX;
+
+            // Car spawning
+            if (pn < probabilitySettingN) {
+                Position p = { 410, -50 };
+
+                if (verticalCarList.size() == 0)
+                {
+                    Car* c = new Car(p, false, &trafficLight2, NULL); //HUSK Å SLETT
+                    verticalCarList.push_back(c);
+                }
+                else
+                {
+                    Car* c = new Car(p, false, &trafficLight2, verticalCarList.back()); //HUSK Å SLETT
+                    verticalCarList.push_back(c);
+                }
+            }
+            if (pw < probabilitySettingW) {
+                Position p = { -50 , 460 };
+                if (horizontalCarList.size() == 0)
+                {
+                    Car* c = new Car(p, true, &trafficLight1, NULL); //HUSK Å SLETT
+                    horizontalCarList.push_back(c);
+                }
+                else
+                {
+                    Car* c = new Car(p, true, &trafficLight1, horizontalCarList.back()); //HUSK Å SLETT
+                    horizontalCarList.push_back(c);
+                }
+            }
             break;
         case 1:
             for (auto v : verticalCarList) {
@@ -274,36 +337,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 }
             }
 
-            pn = rand() / (double) RAND_MAX;
-            pw = rand() / (double) RAND_MAX;
-
-            // Car spawning
-            if (pn < probabilitySetting) {
-                Position p = { 410, -50 };
-                if (verticalCarList.size() == 0)
-                {
-                    Car* c = new Car(p, false, &trafficLight2, NULL); //HUSK Å SLETT
-                    verticalCarList.push_back(c);
-                }
-                else
-                {
-                    Car* c = new Car(p, false, &trafficLight2, verticalCarList.at(verticalCarList.size() - 1)); //HUSK Å SLETT
-                    verticalCarList.push_back(c);
-                }
-            }
-            if (pw < probabilitySetting) {
-                Position p = { -50 , 460 };
-                if (horizontalCarList.size() == 0)
-                {
-                    Car* c = new Car(p, true, &trafficLight1, NULL); //HUSK Å SLETT
-                    horizontalCarList.push_back(c);
-                }
-                else
-                {
-                    Car* c = new Car(p, true, &trafficLight1, horizontalCarList.at(horizontalCarList.size() - 1)); //HUSK Å SLETT
-                    horizontalCarList.push_back(c);
-                }
-            }
             break;
         }
 
@@ -321,10 +354,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             drawTrafficLight(hdc, 300, 100, trafficLight2); 
             drawRoad(hdc);
             for (auto v : verticalCarList) {
-                drawCar(hdc, *v);
+                drawCar(hdc, v);
             }
             for (auto c : horizontalCarList) {
-                drawCarI(hdc, *c);
+                drawCarI(hdc, c);
             }
             /*
             for (size_t i = 0; i < verticalCarList.size(); i++)
@@ -367,11 +400,12 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return (INT_PTR)FALSE;
 }
+
+/*
+Dialog window handler and message procedure
+*/
 INT_PTR CALLBACK ProbabilityDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    static HWND hSlider;
-
-    UNREFERENCED_PARAMETER(lParam);
     switch (message)
     {
     case WM_INITDIALOG:
@@ -381,18 +415,15 @@ INT_PTR CALLBACK ProbabilityDialog(HWND hDlg, UINT message, WPARAM wParam, LPARA
     case WM_COMMAND:
         if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
         {
-        //probabilitySetting = ::GetDlgItemInt(hDlg, IDC_SLIDER1, NULL, TRUE);
-            WCHAR b[100];
-            GetDlgItemText(hDlg, IDC_SLIDER1, b, 50);
             EndDialog(hDlg, LOWORD(wParam));
             return (INT_PTR)TRUE;
         }
         break;
     case WM_HSCROLL:
-        switch (lParam) {
-        case SB_LINELEFT:
-            probabilitySetting = (double) wParam / 6553604.0;
-            break;
+        if (LOWORD(wParam) == SB_THUMBTRACK || LOWORD(wParam) == SB_THUMBPOSITION) {
+
+            probabilitySettingN = HIWORD(wParam) / 100.;
+            probabilitySettingW = probabilitySettingW;
         }
         break;
     }
