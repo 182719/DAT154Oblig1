@@ -85,26 +85,25 @@ void drawRoad(HDC hdc)
 
 }
 
-void drawCar(HDC hdc, Car car) 
+void drawCar(HDC hdc, Car* car) 
 {
-	Color cColor = car.getColor();
-	Position cPosition = car.getPosition();
+	Color cColor = car->getColor();
+	Position cPosition = car->getPosition();
 
 	HBRUSH carColor = CreateSolidBrush(RGB(cColor.red, cColor.green, cColor.blue));
 	HGDIOBJ hOrg = SelectObject(hdc, carColor);
 
 	Rectangle(hdc, cPosition.x, cPosition.y, cPosition.x + 25, cPosition.y + 50);
 
-
 	SelectObject(hdc, hOrg);
 	DeleteObject(carColor);
 	DeleteObject(hOrg);
 }
 
-void drawCarI(HDC hdc, Car car)
+void drawCarI(HDC hdc, Car* car)
 {
-	Color cColor = car.getColor();
-	Position cPosition = car.getPosition();
+	Color cColor = car->getColor();
+	Position cPosition = car->getPosition();
 
 	HBRUSH carColor = CreateSolidBrush(RGB(cColor.red, cColor.green, cColor.blue));
 	HGDIOBJ hOrg = SelectObject(hdc, carColor);

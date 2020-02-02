@@ -30,6 +30,7 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+LRESULT CALLBACK    ProbabilityDialog(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -166,6 +167,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_EXIT:
                 DestroyWindow(hWnd);
                 break;
+            case ID_SHOWPROB:
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOGPROB), hWnd, ProbabilityDialog);
+                break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
@@ -173,10 +177,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_RBUTTONDOWN:
     {
-        if (!fTimer)
+        if (!trafficLIghtTimerStarted)
         {
             SetTimer(hWnd, 0, 2000, NULL);
-            fTimer = true;
+            trafficLIghtTimerStarted = true;
 
         }
         else {
@@ -184,27 +188,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             //KillTimer(hWnd, 0);
             //InvalidateRect(hWnd, 0, true);
         }
-        if (!cTimer)
+        if (!carTimerStarted)
         {
             SetTimer(hWnd, 1, 100, NULL);
-            cTimer = true;
+            carTimerStarted = true;
         }
         else
         {
             //Clean up
             //KillTimer(hWnd, 1);
             //InvalidateRect(hWnd, 0, true);
-        }
-        Position p = { -50 , 460 };
-        if (horizontalCarList.size() == 0)
-        {
-            Car* c = new Car(p, true, &trafficLight1, NULL); //HUSK Å SLETT
-            horizontalCarList.push_back(c);
-        }
-        else
-        {
-            Car* c = new Car(p, true, &trafficLight1, horizontalCarList.back()); //HUSK Å SLETT
-            horizontalCarList.push_back(c);
         }
         break;
     }
@@ -214,10 +207,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         //trafficLight2.nextState();
         //InvalidateRect(hWnd, NULL, true);
         {
-        if (!fTimer)
+        if (!trafficLIghtTimerStarted)
         {
             SetTimer(hWnd, 0, 2000, NULL);
-            fTimer = true;
+            trafficLIghtTimerStarted = true;
 
         }
         else {
@@ -225,10 +218,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             //KillTimer(hWnd, 0);
             //InvalidateRect(hWnd, 0, true);
         }
-        if (!cTimer)
+        if (!carTimerStarted)
         {
-            SetTimer(hWnd, 1, 100, NULL);
-            cTimer = true;
+            SetTimer(hWnd, 1, 1000, NULL);
+            carTimerStarted = true;
         }
         else 
         {
@@ -237,19 +230,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             //InvalidateRect(hWnd, 0, true);
         }
         //fTimer = !fTimer;
-        Position p = {410, -50};
-
-        if (verticalCarList.size() == 0) 
-        {
-            Car* c = new Car(p, false, &trafficLight2, NULL); //HUSK Å SLETT
-            verticalCarList.push_back(c);
-        }
-        else 
-        {
-            Car* c = new Car(p,false, &trafficLight2, verticalCarList.back()); //HUSK Å SLETT
-            verticalCarList.push_back(c);
-        }
-        
         }
         break;
 
@@ -293,6 +273,37 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 }
             }
+
+            pn = rand() / (double) RAND_MAX;
+            pw = rand() / (double) RAND_MAX;
+
+            // Car spawning
+            if (pn < probabilitySetting) {
+                Position p = { 410, -50 };
+                if (verticalCarList.size() == 0)
+                {
+                    Car* c = new Car(p, false, &trafficLight2, NULL); //HUSK Å SLETT
+                    verticalCarList.push_back(c);
+                }
+                else
+                {
+                    Car* c = new Car(p, false, &trafficLight2, verticalCarList.at(verticalCarList.size() - 1)); //HUSK Å SLETT
+                    verticalCarList.push_back(c);
+                }
+            }
+            if (pw < probabilitySetting) {
+                Position p = { -50 , 460 };
+                if (horizontalCarList.size() == 0)
+                {
+                    Car* c = new Car(p, true, &trafficLight1, NULL); //HUSK Å SLETT
+                    horizontalCarList.push_back(c);
+                }
+                else
+                {
+                    Car* c = new Car(p, true, &trafficLight1, horizontalCarList.at(horizontalCarList.size() - 1)); //HUSK Å SLETT
+                    horizontalCarList.push_back(c);
+                }
+            }
             break;
         }
 
@@ -318,11 +329,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             /*
             for (size_t i = 0; i < verticalCarList.size(); i++)
             {
-                drawCar(hdc, *(verticalCarList.at(i)));
+                drawCar(hdc, (verticalCarList.at(i)));
             }
             for (size_t i = 0; i < horizontalCarList.size(); i++)
             {
-                drawCarI(hdc, *(horizontalCarList.at(i)));
+                drawCarI(hdc, (horizontalCarList.at(i)));
             }
             */
             EndPaint(hWnd, &ps);
@@ -351,6 +362,37 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         {
             EndDialog(hDlg, LOWORD(wParam));
             return (INT_PTR)TRUE;
+        }
+        break;
+    }
+    return (INT_PTR)FALSE;
+}
+INT_PTR CALLBACK ProbabilityDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    static HWND hSlider;
+
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+    case WM_INITDIALOG:
+
+        return (INT_PTR)TRUE;
+
+    case WM_COMMAND:
+        if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+        {
+        //probabilitySetting = ::GetDlgItemInt(hDlg, IDC_SLIDER1, NULL, TRUE);
+            WCHAR b[100];
+            GetDlgItemText(hDlg, IDC_SLIDER1, b, 50);
+            EndDialog(hDlg, LOWORD(wParam));
+            return (INT_PTR)TRUE;
+        }
+        break;
+    case WM_HSCROLL:
+        switch (lParam) {
+        case SB_LINELEFT:
+            probabilitySetting = (double) wParam / 6553604.0;
+            break;
         }
         break;
     }
