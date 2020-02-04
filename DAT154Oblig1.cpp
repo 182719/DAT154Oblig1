@@ -7,8 +7,9 @@
 #include "Car.h"
 #include <vector>
 #include <list>
-#include "SirkList.h"
 #include "Commctrl.h"
+
+using namespace std;
 
 #define MAX_LOADSTRING 100
 
@@ -25,8 +26,8 @@ static bool carTimerStarted = false;                     //Car timer
 list<Car*> liste1;
 double pn = 0;
 double pw = 0;
-double probabilitySettingN = 0;
-double probabilitySettingW = 0;
+double probabilitySettingN = 1;
+double probabilitySettingW = 1;
 
 
 // Forward declarations of functions included in this code module:
